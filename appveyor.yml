@@ -3,7 +3,7 @@ branches:
   only:
   - master
 build_script:
-- Prebuild.exe /target vs2010 /targetframework v4_5 /conditionals ISWIN;NET_4_5
+- bin/Prebuild.exe /target vs2010 /targetframework v4_5 /conditionals ISWIN;NET_4_5
 - msbuild OpenSim.sln /p:Configuration=Debug  /p:DefineConstants="ISWIN;NET_4_5"
 artifacts:
 - path: OpenSim\bin
