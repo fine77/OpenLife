@@ -25,23 +25,28 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+using System.IO;
+
 namespace OpenSim
 {
     public class VersionInfo
     {
         public const string VersionNumber = "0.0.1";
-        private const Flavour VERSION_FLAVOUR = Flavour.Dev;
+        private const Flavour VERSION_FLAVOUR = Flavour.Developement;
 
         public enum Flavour
         {
             Unknown,
-            Dev,
-            RC1,
-            RC2,
-            RC3,
+            Developement,
+            Release_Candidate_1,
+            Release_Candidate_2,
+            Release_Candidate_3,
             Release,
             Post_Fixes,
-            Extended
+            Extended,
+            Beta_Release,
+            Testing_Release,
+            Internal
         }
 
         public static string Version
@@ -52,6 +57,14 @@ namespace OpenSim
         public static string GetVersionString(string versionNumber, Flavour flavour)
         {
             string versionString = "OpenLife Server " + versionNumber + " " + flavour;
+            string gitCommitFileName = ".version";
+
+            if (File.Exists(gitCommitFileName))
+            {
+                StreamReader CommitFile = File.OpenText(gitCommitFileName);
+                versionString = CommitFile.ReadLine();
+                CommitFile.Close();
+            }
             return versionString.PadRight(VERSIONINFO_VERSION_LENGTH);
         }
 
